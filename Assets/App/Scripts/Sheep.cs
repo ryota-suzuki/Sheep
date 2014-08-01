@@ -13,7 +13,7 @@ public class Sheep : MonoBehaviour
 	}
 	public Type type { get; set; }
 	protected float elapsedTime;
-	protected float lifeTime = 0.7f; // 羊が表示されている秒数
+	protected float lifeTime = 0.5f; // 羊が表示されている秒数
 	protected GameManager gameManager;
 	protected bool isTouched;
 

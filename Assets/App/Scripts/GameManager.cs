@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GameManager : MonoBehaviour {
-
+public class GameManager : MonoBehaviour
+{
 	private enum Status
 	{
 		Opening,
@@ -98,6 +98,5 @@ public class GameManager : MonoBehaviour {
 		if (!isStatusPlaying())
 			return;
 		GUI.Label(new Rect(320, 5, 200, 200), count.ToString());
-
 	}
 }

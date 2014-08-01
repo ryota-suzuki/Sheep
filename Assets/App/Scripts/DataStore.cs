@@ -3,7 +3,7 @@ using System.Collections;
 
 public class DataStore : MonoBehaviour
 {
-	private bool isCreated;
+	private static bool isCreated;
 
 	public static int count { get; set; }
 	public static int sheepType { get; set; }
@@ -11,7 +11,10 @@ public class DataStore : MonoBehaviour
 	void Awake()
 	{
 		if (isCreated)
+		{
+			Destroy(gameObject);
 			return;
+		}
 
 		DontDestroyOnLoad(gameObject);
 		isCreated = true;

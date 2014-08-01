@@ -12,5 +12,15 @@ public class SleepingSheep : Sheep
 	protected override void Update()
 	{
 		base.Update();
+
+		if (elapsedTime < lifeTime)
+			return;
+
+		if (!isTouched)
+		{
+			gameManager.GameOver((int)type);
+		}
+
+		Destroy(gameObject);
 	}
 }

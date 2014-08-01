@@ -12,5 +12,17 @@ public class WeakSheep : Sheep
 	protected override void Update()
 	{
 		base.Update();
+
+		if (isTouched)
+		{
+			gameManager.GameOver((int)type);
+			Destroy(gameObject);
+			return;
+		}
+
+		if (elapsedTime < lifeTime)
+			return;
+
+		Destroy(gameObject);
 	}
 }

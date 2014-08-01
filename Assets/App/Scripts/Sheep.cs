@@ -12,22 +12,28 @@ public class Sheep : MonoBehaviour
 		Weak,
 	}
 	public Type type { get; set; }
-	private float lifeTime = 5.0f; // 羊が表示されている秒数
-	private float elapsedTime;
+	protected float elapsedTime;
+	protected float lifeTime = 0.7f; // 羊が表示されている秒数
+	protected GameManager gameManager;
+	protected bool isTouched;
 
 	protected virtual void Start()
 	{
 		// TODO suzuki 初期ポジションの制御
-		transform.localPosition = new Vector3(5.7f, -2.8f, 0);
+		// TODO suzuki Order in Layer の設定
+		transform.localPosition = new Vector3(0, -2.8f, -1.0f);
 		elapsedTime = 0;
+		isTouched = false;
+		gameManager = FindObjectOfType<GameManager>();
 	}
 
 	protected virtual void Update()
 	{
 		elapsedTime += Time.deltaTime;
-		if (elapsedTime >= lifeTime)
-		{
-			Destroy(gameObject);
-		}
+	}
+
+	public void Touched()
+	{
+		isTouched = true;
 	}
 }

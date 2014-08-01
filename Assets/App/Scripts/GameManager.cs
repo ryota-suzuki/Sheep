@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour {
 	public int count { get; private set; }
 
 	// NOTE Inspectorにて設定必要
+	public GameObject openingPrefab;
 	public Sheep[] sheeps;
 
 	// NOTE count が「definedValueの倍数」or「definedValueStrを含む」場合は特殊な羊を出す
@@ -25,7 +26,7 @@ public class GameManager : MonoBehaviour {
 	void Start()
 	{
 		definedValueStr = definedValue.ToString();
-		Opening();
+		StartCoroutine(Opening());
 	}
 
 	void Update()
@@ -59,22 +60,31 @@ public class GameManager : MonoBehaviour {
 		return false;
 	}
 
-	private void Opening()
+	private IEnumerator Opening()
 	{
 		status = Status.Opening;
 		count = 1;
-		// TODO suzuki Openingインスタンスの作成
 
-		// TODO suzuki 本来はOpening処理の最後で下記の処理を行う
+		// NOTE Opening表示(Openingが非表示になるまで待機する)
+		float openingTime = 2.0f;
+		GameObject opening = Instantiate(openingPrefab) as GameObject;
+		Destroy(opening, openingTime);
+		yield return new WaitForSeconds(openingTime);
+
 		// NOTE 順番注意 Sheepオブジェクトの作成 -> StatusをPlayingに変更
 		Instantiate(sheeps[(int)LotSheepType()]);
 		status = Status.Playing;
 	}
 
-	public void GameOver()
+	public void GameOver(int type)
 	{
 		status = Status.GameOver;
-		// TODO suzuki GameOverインスタンスの作成やスコアの表示
+
+		// GameOver scene に持ち越すためのデータをセット
+		DataStore.count = count;
+		DataStore.sheepType = type;
+
+		Application.LoadLevel ("GameOver");
 	}
 
 	public bool isStatusOpening()  { return status == Status.Opening; }
@@ -82,4 +92,12 @@ public class GameManager : MonoBehaviour {
 	public bool isStatusGameOver() { return status == Status.GameOver; }
 
 	public void setStatusPlaying() { status = Status.Playing; }
+
+	void OnGUI()
+	{
+		if (!isStatusPlaying())
+			return;
+		GUI.Label(new Rect(320, 5, 200, 200), count.ToString());
+
+	}
 }

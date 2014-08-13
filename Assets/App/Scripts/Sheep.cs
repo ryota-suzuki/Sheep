@@ -20,8 +20,7 @@ public class Sheep : MonoBehaviour
 	protected virtual void Start()
 	{
 		// TODO suzuki 初期ポジションの制御
-		// TODO suzuki Order in Layer の設定
-		transform.localPosition = new Vector3(0, -2.8f, -1.0f);
+		transform.localPosition = new Vector3(0, -2.8f, 0);
 		elapsedTime = 0;
 		isTouched = false;
 		gameManager = FindObjectOfType<GameManager>();
